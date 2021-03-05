@@ -137,14 +137,15 @@ module.exports = function (webpackEnv){
                     sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
                 },
             },
-            {
-                loader: require.resolve('less-loader'),
-                options: {
-                    lessOptions: {
-                        strictMath: true,
-                    },
-                },
-            }
+            //  现在不需要了
+            // {
+            //     loader: require.resolve('less-loader'),
+            //     options: {
+            //         lessOptions: {
+            //             strictMath: true,
+            //         },
+            //     },
+            // }
         ].filter(Boolean);
         if (preProcessor) {
             loaders.push(
