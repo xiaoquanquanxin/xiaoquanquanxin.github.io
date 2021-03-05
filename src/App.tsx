@@ -1,14 +1,30 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import './App.css';
-import DangerButton from "./component/DangerButton"
+import {GithubFork} from "@components/global/gitubFork/gitubFork";
+import {ES6} from "@pages/ES6";
+
 
 function App() {
-	return (
-		<div className="App">
+    const button = useRef(null);
+    useEffect(() => {
+        const {current} = button;
+        console.log(current);
+    }, []);
+    return (
+        <div className="App" ref={button}>
             <h2>我的个人博客</h2>
-			<DangerButton/>
-		</div>
-	);
+            <GithubFork/>
+            <ES6/>
+        </div>
+    );
+}
+
+function clickHandler1() {
+    console.log('clickHandler1');
+}
+
+function clickHandler2() {
+    console.log('clickHandler2');
 }
 
 export default App;
