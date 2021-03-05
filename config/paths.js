@@ -16,60 +16,77 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 // We can't use a relative path in HTML because we don't want to load something
 // like /todos/42/static/js/bundle.7289d.js. We have to know the root.
 const publicUrlOrPath = getPublicUrlOrPath(
-  process.env.NODE_ENV === 'development',
-  require(resolveApp('package.json')).homepage,
-  process.env.PUBLIC_URL
+    process.env.NODE_ENV === 'development',
+    require(resolveApp('package.json')).homepage,
+    process.env.PUBLIC_URL
 );
 
 const buildPath = process.env.BUILD_PATH || 'build';
 
 const moduleFileExtensions = [
-  'web.mjs',
-  'mjs',
-  'web.js',
-  'js',
-  'web.ts',
-  'ts',
-  'web.tsx',
-  'tsx',
-  'json',
-  'web.jsx',
-  'jsx',
+    'web.mjs',
+    'mjs',
+    'web.js',
+    'js',
+    'web.ts',
+    'ts',
+    'web.tsx',
+    'tsx',
+    'json',
+    'web.jsx',
+    'jsx',
 ];
 
 // Resolve file paths in the same order as webpack
 const resolveModule = (resolveFn, filePath) => {
-  const extension = moduleFileExtensions.find(extension =>
-    fs.existsSync(resolveFn(`${filePath}.${extension}`))
-  );
+    const extension = moduleFileExtensions.find(extension =>
+        fs.existsSync(resolveFn(`${filePath}.${extension}`))
+    );
 
-  if (extension) {
-    return resolveFn(`${filePath}.${extension}`);
-  }
+    if (extension) {
+        return resolveFn(`${filePath}.${extension}`);
+    }
 
-  return resolveFn(`${filePath}.js`);
+    return resolveFn(`${filePath}.js`);
 };
 
 // config after eject: we're in ./config/
 module.exports = {
-  dotenv: resolveApp('.env'),
-  appPath: resolveApp('.'),
-  appBuild: resolveApp(buildPath),
-  appPublic: resolveApp('public'),
-  appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveModule(resolveApp, 'src/index'),
-  appPackageJson: resolveApp('package.json'),
-  appSrc: resolveApp('src'),
-  appTsConfig: resolveApp('tsconfig.json'),
-  appJsConfig: resolveApp('jsconfig.json'),
-  yarnLockFile: resolveApp('yarn.lock'),
-  testsSetup: resolveModule(resolveApp, 'src/setupTests'),
-  proxySetup: resolveApp('src/setupProxy.js'),
-  appNodeModules: resolveApp('node_modules'),
-  swSrc: resolveModule(resolveApp, 'src/service-worker'),
-  publicUrlOrPath,
-};
+    dotenv: resolveApp('.env'),
+    appPath: resolveApp('.'),
+    appBuild: resolveApp(buildPath),
+    appPublic: resolveApp('public'),
+    appHtml: resolveApp('public/index.html'),
+    appIndexJs: resolveModule(resolveApp, 'src/index'),
+    appPackageJson: resolveApp('package.json'),
+    appSrc: resolveApp('src'),
+    appTsConfig: resolveApp('tsconfig.json'),
+    appJsConfig: resolveApp('jsconfig.json'),
+    yarnLockFile: resolveApp('yarn.lock'),
+    testsSetup: resolveModule(resolveApp, 'src/setupTests'),
+    proxySetup: resolveApp('src/setupProxy.js'),
+    appNodeModules: resolveApp('node_modules'),
+    swSrc: resolveModule(resolveApp, 'src/service-worker'),
+    publicUrlOrPath,
 
+    /**
+     * 以下，自定义的，给别名用的所以加了__
+     * ***/
+    //  api
+    __api: resolveApp('src/api'),
+    //  组件
+    __components: resolveApp('src/components'),
+    //  页面
+    __pages: resolveApp('src/pages'),
+    //  css
+    __css: resolveApp('src/css'),
+    //  媒体
+    __img: resolveApp('src/img'),
+    //  工具
+    __utils: resolveApp('src/utils'),
+    //  store
+    __store: resolveApp('src/store'),
+};
 
 
 module.exports.moduleFileExtensions = moduleFileExtensions;
