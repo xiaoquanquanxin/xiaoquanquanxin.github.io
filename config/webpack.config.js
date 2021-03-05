@@ -59,8 +59,8 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 const swSrc = paths.swSrc;
 
 // style files regexes
-const cssRegex = /\.css$/;
-const cssModuleRegex = /\.module\.css$/;
+const cssRegex = /\.(css|less)$/;
+const cssModuleRegex = /\.module\.(css|less)$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
@@ -137,6 +137,14 @@ module.exports = function (webpackEnv){
                     sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
                 },
             },
+            {
+                loader: require.resolve('less-loader'),
+                options: {
+                    lessOptions: {
+                        strictMath: true,
+                    },
+                },
+            }
         ].filter(Boolean);
         if (preProcessor) {
             loaders.push(
