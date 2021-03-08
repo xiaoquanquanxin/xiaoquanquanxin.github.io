@@ -1,7 +1,16 @@
 import React, {useEffect, useRef} from "react";
+import {
+    Route,
+    Redirect,
+    Switch,
+    Link,
+    BrowserRouter as Router,
+    HashRouter,
+} from 'react-router-dom';
 import './App.css';
 import {GithubFork} from "@components/global/gitubFork/gitubFork";
 import {ES6} from "@pages/ES6";
+import {Slider} from "@components/global/slider/slider";
 
 
 function App() {
@@ -11,11 +20,16 @@ function App() {
         console.log(current);
     }, []);
     return (
-        <div className="App" ref={button}>
-            <h2>我的个人博客</h2>
-            <GithubFork/>
-            <ES6/>
-        </div>
+        <HashRouter>
+            <div className="App" ref={button}>
+                <GithubFork/>
+                <Slider/>
+
+                <Route path="/about">about</Route>
+                <Route path="/index">index</Route>
+                <ES6/>
+            </div>
+        </HashRouter>
     );
 }
 

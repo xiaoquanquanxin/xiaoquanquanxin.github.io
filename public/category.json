@@ -5,6 +5,7 @@
             "name": "介绍",
             "primary": false,
             "link": "/introduction",
+            "itemIndexes": false,
             "children": null
         },
         {
@@ -22,6 +23,98 @@
                     "itemIndexes": true,
                     "name": "Typescript",
                     "link": "/typescript"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "nodeJs",
+                    "link": "/nodeJs"
+                }
+            ]
+        },
+        {
+            "name": "h5",
+            "primary": true,
+            "link": null,
+            "itemIndexes": true,
+            "children": [
+                {
+                    "itemIndexes": true,
+                    "name": "canvas",
+                    "link": "/canvas"
+                }
+            ]
+        },
+        {
+            "name": "前端框架",
+            "primary": true,
+            "link": null,
+            "itemIndexes": true,
+            "children": [
+                {
+                    "itemIndexes": true,
+                    "name": "设计模式基础",
+                    "link": "/designMode"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "vue及其生态",
+                    "link": "/vueAndItsEcology"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "vue源码分析",
+                    "link": "/vueSourceCodeAnalysis"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "React及其生态",
+                    "link": "/reactAndItsEcology"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "React源码分析",
+                    "link": "/reactSourceCodeAnalysis"
+                }
+            ]
+        },
+        {
+            "name": "前端工程化",
+            "primary": true,
+            "link": null,
+            "itemIndexes": true,
+            "children": [
+                {
+                    "itemIndexes": true,
+                    "name": "webpack",
+                    "link": "/webpack"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "nginx代理",
+                    "link": "/nginxProxy"
+                }
+            ]
+        },
+        {
+            "name": "性能优化",
+            "primary": true,
+            "link": null,
+            "itemIndexes": true,
+            "children": [
+                {
+                    "itemIndexes": true,
+                    "name": "性能优化基础",
+                    "link": "/performanceOptimization"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "浏览器原理",
+                    "link": "/browserPrinciples"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "http基础",
+                    "link": "/HTTPBased"
                 }
             ]
         }
