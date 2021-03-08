@@ -2,17 +2,26 @@
     "version": "0.0.1",
     "children": [
         {
-            "name": "introduction",
-            "link": "/",
-            "children": []
+            "name": "介绍",
+            "primary": false,
+            "link": "/introduction",
+            "children": null
         },
         {
             "name": "基础",
-            "link": "/basic",
+            "primary": true,
+            "link": null,
+            "itemIndexes": true,
             "children": [
                 {
+                    "itemIndexes": true,
                     "name": "ES6",
-                    "link": "/ES6"
+                    "link": "/es6"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "Typescript",
+                    "link": "/typescript"
                 }
             ]
         }
