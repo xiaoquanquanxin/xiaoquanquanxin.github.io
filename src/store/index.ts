@@ -9,7 +9,8 @@ export class Store {
 	//  菜单数据
 	private sliderListData: Array<SliderDataModel> = [];
 
-	@computed get getSliderListData() {
+	@computed
+	get getSliderListData() {
 		return this.sliderListData;
 	}
 
@@ -21,13 +22,21 @@ export class Store {
 	//  路由数据
 	private routerListData: Array<SliderDataModel> = [];
 
-	@computed get getRouterListData() {
+	@computed
+	get getRouterListData() {
 		return this.routerListData;
 	}
 
 	@action
 	setRouterListData = (routerListData: SliderListDataModel) => {
 		this.routerListData = routerListData;
+	};
+
+	//  路由数据
+	private loading: boolean = false;
+	@action
+	setLoading = (loading: boolean) => {
+		this.loading = loading;
 	};
 
 }
