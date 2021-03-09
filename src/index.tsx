@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.less';
 import App from './App';
 import {Provider} from 'mobx-react';
-import {store, actions} from "@store/index";
+import {store} from "@store/index";
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Provider store={store} actions={actions}>
+        <Provider store={store}>
             <App/>
         </Provider>
     </React.StrictMode>,
