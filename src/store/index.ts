@@ -15,7 +15,7 @@ export class Store {
     }
 
     @action
-    setSliderData = (sliderData: SliderListDataModel) => {
+    setSliderListData = (sliderData: SliderListDataModel) => {
         this.sliderData = sliderData;
     };
 }

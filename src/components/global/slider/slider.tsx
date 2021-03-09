@@ -3,7 +3,7 @@ import {request} from "@api/request";
 import {Link} from "react-router-dom";
 import style from "./slider.module.less";
 import {observer} from "mobx-react";
-import {computedItemIndexes} from "@utils/slider";
+import {computedItemIndexes, computedRouteItem} from "@utils/slider";
 import {SliderDataModel, SliderListDataModel} from "@models/slider";
 
 const url = '/api/category.json';
@@ -15,8 +15,12 @@ export const Slider = observer(({store}) => {
         const res = request({url});
         res.then(v => {
             const {children} = v;
-            computedItemIndexes(children);
-            store.setSliderData(children);
+            //  计算成菜单数据
+            const sliderListData = computedItemIndexes(children);
+            //  计算成路由数据
+            // computedRouteItem(children);
+
+            store.setSliderListData(sliderListData);
         });
     }, []);
     return (
