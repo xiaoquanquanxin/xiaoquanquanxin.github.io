@@ -11,49 +11,50 @@ const url = '/api/category.json';
 
 //  菜单组件
 export const Slider = observer(({store}) => {
-    useEffect(() => {
-        const res = request({url});
-        res.then(v => {
-            const {children} = v;
-            //  计算成菜单数据
-            const sliderListData = computedItemIndexes(children);
-            //  计算成路由数据
-            // computedRouteItem(children);
-
-            store.setSliderListData(sliderListData);
-        });
-    }, []);
-    return (
-        <nav className={style.slider}>
-            <SliderUl data={store.sliderData}/>
-        </nav>
-    )
+	useEffect(() => {
+		const res = request({url});
+		res.then(v => {
+			const {children} = v;
+			//  计算成菜单数据
+			const sliderListData = computedItemIndexes(children);
+			//  计算成路由数据
+			const routerListData = computedRouteItem(children);
+			//  赋值
+			store.setSliderListData(sliderListData);
+			store.setRouterListData(routerListData);
+		});
+	}, []);
+	return (
+		<nav className={style.slider}>
+			<SliderUl sliderListData={store.sliderListData}/>
+		</nav>
+	)
 });
 
 // 菜单列表
-function SliderUl({data}: { data: SliderListDataModel }) {
-    if (!data || !data.length) {
-        return null;
-    }
-    return (
-        <ul className={style.SliderUl}>
-            {data.map(({link, name, primary, indexes, children}: SliderDataModel, index: number) => {
-                return (
-                    <li key={index}>
-                        {link && <Link to={link}>
+function SliderUl({sliderListData}: { sliderListData: SliderListDataModel }) {
+	if (!sliderListData || !sliderListData.length) {
+		return null;
+	}
+	return (
+		<ul className={style.SliderUl}>
+			{sliderListData.map(({link, name, primary, indexes, children}: SliderDataModel, index: number) => {
+				return (
+					<li key={index}>
+						{link && <Link to={link}>
                             <span className={style.link}>
                                 {indexes && <b>{indexes}</b>}&nbsp;
-                                {name}
+								{name}
                             </span>
                         </Link>}
-                        {primary && <div className={style.primary}>
-                            {indexes && <b>{indexes}</b>}&nbsp;
-                            {name}
+						{primary && <div className={style.primary}>
+							{indexes && <b>{indexes}</b>}&nbsp;
+							{name}
                         </div>}
-                        <SliderUl data={children}/>
-                    </li>
-                )
-            })}
-        </ul>
-    )
+						<SliderUl sliderListData={children}/>
+					</li>
+				)
+			})}
+		</ul>
+	)
 }
