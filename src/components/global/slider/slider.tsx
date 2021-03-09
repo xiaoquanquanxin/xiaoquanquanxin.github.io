@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {request} from "@api/request";
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import style from "./slider.module.less";
 import {observer} from "mobx-react";
 import {computedItemIndexes, computedRouteItem} from "@utils/slider";
 import {SliderDataModel, SliderListDataModel} from "@models/slider";
-
 const url = '/api/category.json';
 
 
@@ -14,6 +13,8 @@ export const Slider = observer(({store}) => {
 	useEffect(() => {
 		const res = request({url});
 		res.then(v => {
+			//	关闭Loading
+			store.setLoading(false);
 			const {children} = v;
 			//  计算成菜单数据
 			const sliderListData = computedItemIndexes(children);
@@ -37,16 +38,16 @@ function SliderUl({sliderListData}: { sliderListData: SliderListDataModel }) {
 		return null;
 	}
 	return (
-		<ul className={style.SliderUl}>
+		<ul>
 			{sliderListData.map(({link, name, primary, indexes, children}: SliderDataModel, index: number) => {
 				return (
 					<li key={index}>
-						{link && <Link to={link}>
+						{link && <NavLink to={link} activeClassName={style.active}>
                             <span className={style.link}>
                                 {indexes && <b>{indexes}</b>}&nbsp;
 								{name}
                             </span>
-                        </Link>}
+                        </NavLink>}
 						{primary && <div className={style.primary}>
 							{indexes && <b>{indexes}</b>}&nbsp;
 							{name}
