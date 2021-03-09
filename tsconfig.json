@@ -19,6 +19,7 @@
         "isolatedModules": true,
         "experimentalDecorators": true,
         "noEmit": true,
+        "noImplicitAny": false,
         "jsx": "react-jsx",
         "baseUrl": "./src",
         "paths": {
@@ -36,6 +37,9 @@
             ],
             "@api/*": [
                 "./api/*"
+            ],
+            "@store/*": [
+                "./store/*"
             ]
         }
     },
