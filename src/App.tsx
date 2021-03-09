@@ -11,21 +11,17 @@ import './App.css';
 import {GithubFork} from "@components/global/gitubFork/gitubFork";
 import {Slider} from "@components/global/slider/slider";
 import {ES6} from "@pages/ES6";
-import {inject, observer} from "mobx-react";
-import {store} from "@store/index";
+import {inject} from "mobx-react";
 
-@inject('store', 'actions')
-@observer
-export class App extends React.Component {
+@inject('store')
+export class App extends React.Component<any> {
     render() {
-        // @ts-ignore
-        const {actions} = this.props;
-        console.log(actions);
+        const {store} = this.props;
         return (
             <HashRouter>
                 <div className="App">
                     <GithubFork/>
-                    <Slider actions={actions} store={store}/>
+                    <Slider store={store}/>
                     <Route path="/about">about</Route>
                     <Route path="/index">index</Route>
                     <ES6/>
