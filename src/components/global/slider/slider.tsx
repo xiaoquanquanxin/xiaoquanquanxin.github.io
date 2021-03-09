@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import style from "./slider.module.less";
 import {observer} from "mobx-react";
 import {computedItemIndexes} from "@utils/slider";
-import {sliderData, sliderListData} from "@models/slider";
+import {SliderDataModel, SliderListDataModel} from "@models/slider";
 
 const url = '/api/category.json';
 
@@ -27,13 +27,13 @@ export const Slider = observer(({store}) => {
 });
 
 // 菜单列表
-function SliderUl({data}: { data: sliderListData }) {
+function SliderUl({data}: { data: SliderListDataModel }) {
     if (!data || !data.length) {
         return null;
     }
     return (
         <ul className={style.SliderUl}>
-            {data.map(({link, name, primary, indexes, children}: sliderData, index: number) => {
+            {data.map(({link, name, primary, indexes, children}: SliderDataModel, index: number) => {
                 return (
                     <li key={index}>
                         {link && <Link to={link}>

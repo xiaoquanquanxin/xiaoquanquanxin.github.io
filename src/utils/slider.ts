@@ -1,11 +1,11 @@
-import {sliderListData, sliderData} from "@models/slider";
+import {SliderDataModel, SliderListDataModel} from "@models/slider";
 
 //  计算索引
-export function computedItemIndexes(sliderListData: sliderListData, level: number = 0, currentIndex: number = 0) {
+export function computedItemIndexes(sliderListData: SliderListDataModel, level: number = 0, currentIndex: number = 0) {
     if (!sliderListData || !sliderListData.length) {
         return;
     }
-    sliderListData.forEach((sliderData: sliderData,) => {
+    sliderListData.forEach((sliderData: SliderDataModel) => {
         if (sliderData.itemIndexes) {
             //  如果是主标题
             if (sliderData.primary) {

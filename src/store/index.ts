@@ -1,5 +1,5 @@
 import {computed, action, makeAutoObservable} from "mobx";
-import {sliderData} from "@components/global/slider/slider";
+import {SliderDataModel, SliderListDataModel} from "@models/slider";
 
 export class Store {
     constructor() {
@@ -7,7 +7,7 @@ export class Store {
     }
 
     //  菜单数据
-    private sliderData: Array<sliderData> = [];
+    private sliderData: Array<SliderDataModel> = [];
 
     @computed get getSliderData() {
         console.log('读取');
@@ -15,7 +15,7 @@ export class Store {
     }
 
     @action
-    setSliderData = (sliderData: Array<sliderData>) => {
+    setSliderData = (sliderData: SliderListDataModel) => {
         this.sliderData = sliderData;
     };
 }

@@ -1,5 +1,5 @@
-export interface sliderDataModel {
-    children: Array<sliderDataModel>;
+export interface SliderDataModel {
+    children: Array<SliderDataModel>;
     link: string;
     name: string;
     primary: boolean;
@@ -7,6 +7,6 @@ export interface sliderDataModel {
     indexes: string;
 }
 
-export interface sliderListDataModel extends Array<sliderDataModel> {
-    [key: number]: sliderDataModel;
+export interface SliderListDataModel extends Array<SliderDataModel> {
+    [key: number]: SliderDataModel;
 }
