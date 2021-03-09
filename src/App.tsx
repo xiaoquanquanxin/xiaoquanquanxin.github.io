@@ -9,36 +9,30 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import {GithubFork} from "@components/global/gitubFork/gitubFork";
-import {ES6} from "@pages/ES6";
 import {Slider} from "@components/global/slider/slider";
+import {ES6} from "@pages/ES6";
+import {inject, observer} from "mobx-react";
+import {store} from "@store/index";
 
-
-function App() {
-    const button = useRef(null);
-    useEffect(() => {
-        const {current} = button;
-        console.log(current);
-    }, []);
-    return (
-        <HashRouter>
-            <div className="App" ref={button}>
-                <GithubFork/>
-                <Slider/>
-
-                <Route path="/about">about</Route>
-                <Route path="/index">index</Route>
-                <ES6/>
-            </div>
-        </HashRouter>
-    );
-}
-
-function clickHandler1() {
-    console.log('clickHandler1');
-}
-
-function clickHandler2() {
-    console.log('clickHandler2');
+@inject('store', 'actions')
+@observer
+export class App extends React.Component {
+    render() {
+        // @ts-ignore
+        const {actions} = this.props;
+        console.log(actions);
+        return (
+            <HashRouter>
+                <div className="App">
+                    <GithubFork/>
+                    <Slider actions={actions} store={store}/>
+                    <Route path="/about">about</Route>
+                    <Route path="/index">index</Route>
+                    <ES6/>
+                </div>
+            </HashRouter>
+        )
+    }
 }
 
 export default App;
