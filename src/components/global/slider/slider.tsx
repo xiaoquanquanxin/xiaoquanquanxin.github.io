@@ -3,36 +3,11 @@ import {request} from "@api/request";
 import {Link} from "react-router-dom";
 import style from "./slider.module.less";
 import {observer} from "mobx-react";
+import {computedItemIndexes} from "@utils/slider";
+import {sliderData, sliderListData} from "@models/slider";
 
 const url = '/api/category.json';
 
-export interface sliderData {
-    children: Array<sliderData>;
-    link: string;
-    name: string;
-    primary: boolean;
-    itemIndexes: boolean;
-    indexes: string;
-}
-
-//  计算索引
-function computedItemIndexes(sliderListData: Array<sliderData>, level: number = 0, currentIndex: number = 0) {
-    if (!sliderListData || !sliderListData.length) {
-        return;
-    }
-    sliderListData.forEach((sliderData: sliderData,) => {
-        if (sliderData.itemIndexes) {
-            //  如果是主标题
-            if (sliderData.primary) {
-                sliderData.indexes = `${++level}.`;
-            } else {
-                //  如果是内容
-                sliderData.indexes = `${level}.${++currentIndex}.`;
-            }
-        }
-        computedItemIndexes(sliderData.children, level, currentIndex);
-    });
-}
 
 //  菜单组件
 export const Slider = observer(({store}) => {
@@ -52,7 +27,7 @@ export const Slider = observer(({store}) => {
 });
 
 // 菜单列表
-function SliderUl({data}: { data: Array<sliderData> }) {
+function SliderUl({data}: { data: sliderListData }) {
     if (!data || !data.length) {
         return null;
     }

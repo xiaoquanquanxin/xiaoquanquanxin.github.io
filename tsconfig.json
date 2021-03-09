@@ -40,6 +40,12 @@
             ],
             "@store/*": [
                 "./store/*"
+            ],
+            "@models/*": [
+                "./models/*"
+            ],
+            "@utils/*": [
+                "./utils/*"
             ]
         }
     },
