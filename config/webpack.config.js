@@ -77,6 +77,9 @@ const hasJsxRuntime = (() => {
     }
 })();
 
+
+//const contenthash = 'contenthash:8';
+const contenthash = 'content';
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function (webpackEnv){
@@ -105,7 +108,7 @@ module.exports = function (webpackEnv){
                 // css is located in `static/css`, use '../../' to locate index.html folder
                 // in production `paths.publicUrlOrPath` can be a relative path
                 options: paths.publicUrlOrPath.startsWith('.')
-                    ? {publicPath: '../../'}
+                    ? { publicPath: '../../' }
                     : {},
             },
             {
@@ -211,13 +214,13 @@ module.exports = function (webpackEnv){
             // There will be one main bundle, and one file per asynchronous chunk.
             // In development, it does not produce real files.
             filename: isEnvProduction
-                ? 'static/js/[name].[contenthash:8].js'
+                ? `static/js/[name].[${contenthash}].js`
                 : isEnvDevelopment && 'static/js/bundle.js',
             // TODO: remove this when upgrading to webpack 5
             futureEmitAssets: true,
             // There are also additional JS chunk files if you use code splitting.
             chunkFilename: isEnvProduction
-                ? 'static/js/[name].[contenthash:8].chunk.js'
+                ? `static/js/[name].[${contenthash}].chunk.js`
                 : isEnvDevelopment && 'static/js/[name].chunk.js',
             // webpack uses `publicPath` to determine where the app is being served from.
             // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -298,7 +301,7 @@ module.exports = function (webpackEnv){
                             : false,
                     },
                     cssProcessorPluginOptions: {
-                        preset: ['default', {minifyFontValues: {removeQuotes: false}}],
+                        preset: ['default', { minifyFontValues: { removeQuotes: false } }],
                     },
                 }),
             ],
@@ -381,7 +384,7 @@ module.exports = function (webpackEnv){
             strictExportPresence: true,
             rules: [
                 // Disable require.ensure as it's not a standard language feature.
-                {parser: {requireEnsure: false}},
+                { parser: { requireEnsure: false } },
                 {
                     // "oneOf" will traverse all following loaders until one will
                     // match the requirements. When no loader matches it will fall
@@ -395,7 +398,7 @@ module.exports = function (webpackEnv){
                             options: {
                                 limit: imageInlineSizeLimit,
                                 mimetype: 'image/avif',
-                                name: 'static/media/[name].[hash:8].[ext]',
+                                name: `static/media/[name].[hash:8].[ext]`,
                             },
                         },
                         // "url" loader works like "file" loader except that it embeds assets
@@ -406,7 +409,7 @@ module.exports = function (webpackEnv){
                             loader: require.resolve('url-loader'),
                             options: {
                                 limit: imageInlineSizeLimit,
-                                name: 'static/media/[name].[hash:8].[ext]',
+                                name: `static/media/[name].[hash:8].[ext]`,
                             },
                         },
                         // Process application JS with Babel.
@@ -466,7 +469,7 @@ module.exports = function (webpackEnv){
                                 presets: [
                                     [
                                         require.resolve('babel-preset-react-app/dependencies'),
-                                        {helpers: true},
+                                        { helpers: true },
                                     ],
                                 ],
                                 cacheDirectory: true,
@@ -567,7 +570,7 @@ module.exports = function (webpackEnv){
                             // by webpacks internal loaders.
                             exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
                             options: {
-                                name: 'static/media/[name].[hash:8].[ext]',
+                                name: `static/media/[name].[hash:8].[ext]`,
                             },
                         },
                         // ** STOP ** Are you adding a new loader?
@@ -655,8 +658,8 @@ module.exports = function (webpackEnv){
             new MiniCssExtractPlugin({
                 // Options similar to the same options in webpackOptions.output
                 // both options are optional
-                filename: 'static/css/[name].[contenthash:8].css',
-                chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+                filename: `static/css/[name].[${contenthash}].css`,
+                chunkFilename: `static/css/[name].[${contenthash}].chunk.css`,
             }),
             // Generate an asset manifest file with the following content:
             // - "files" key: Mapping of all asset filenames to their corresponding
