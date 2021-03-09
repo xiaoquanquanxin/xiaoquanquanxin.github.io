@@ -2,10 +2,11 @@ import React, {useEffect, useState} from "react";
 import {request} from "@api/request";
 import {Link} from "react-router-dom";
 import style from "./slider.module.less";
+import {observer} from "mobx-react";
 
 const url = '/api/category.json';
 
-interface sliderData {
+export interface sliderData {
     children: Array<sliderData>;
     link: string;
     name: string;
@@ -13,7 +14,6 @@ interface sliderData {
     itemIndexes: boolean;
     indexes: string;
 }
-
 
 //  计算索引
 function computedItemIndexes(sliderListData: Array<sliderData>, level: number = 0, currentIndex: number = 0) {
@@ -34,24 +34,22 @@ function computedItemIndexes(sliderListData: Array<sliderData>, level: number = 
     });
 }
 
-export function Slider() {
-    const [sliderData, setSliderData] = useState([]);
+//  菜单组件
+export const Slider = observer(({store}) => {
     useEffect(() => {
         const res = request({url});
         res.then(v => {
             const {children} = v;
             computedItemIndexes(children);
-            // console.log(children);
-            setSliderData(children);
+            store.setSliderData(children);
         });
     }, []);
     return (
         <nav className={style.slider}>
-            <SliderUl data={sliderData}/>
+            <SliderUl data={store.sliderData}/>
         </nav>
     )
-}
-
+});
 
 // 菜单列表
 function SliderUl({data}: { data: Array<sliderData> }) {
@@ -80,4 +78,3 @@ function SliderUl({data}: { data: Array<sliderData> }) {
         </ul>
     )
 }
-
