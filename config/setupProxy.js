@@ -6,7 +6,7 @@ module.exports = function (app){
             target: 'http://192.168.100.128:8080',
             changeOrigin: true,
             pathRewrite: {
-                '/api': '/public'
+                '/build': '/public'
             }
         }),
     );

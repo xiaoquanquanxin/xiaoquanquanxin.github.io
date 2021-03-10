@@ -6,7 +6,7 @@ import {observer} from "mobx-react";
 import {computedItemIndexes, computedRouteItem} from "@utils/slider";
 import {SliderDataModel, SliderListDataModel} from "@models/slider";
 
-const url = '/api/data/category.json';
+const url = '/build/data/category.json';
 
 //  菜单组件
 export const Slider = observer(({store}) => {

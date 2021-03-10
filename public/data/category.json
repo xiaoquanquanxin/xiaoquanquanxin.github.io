@@ -19,13 +19,13 @@
                     "itemIndexes": true,
                     "name": "ES6",
                     "link": "/es6",
-                    "json": "/article/es6.json"
+                    "json": "/build/data/article/es6.json"
                 },
                 {
                     "itemIndexes": true,
                     "name": "Typescript",
                     "link": "/typescript",
-                    "json": "/article/typescript.json"
+                    "json": "/build/data/article/typescript.json"
                 },
                 {
                     "itemIndexes": true,
