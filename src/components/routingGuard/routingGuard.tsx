@@ -1,20 +1,37 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {SliderDataModel} from "@models/slider";
 import {request} from "@api/request";
+import {Store} from "@store/index";
+import {observer} from "mobx-react";
 
 //	路由守卫组件
-export function RoutingGuard({BasicPage, routerItem}: { BasicPage: Function, routerItem: SliderDataModel, }) {
+export const RoutingGuard = observer((
+	{BasicPage, routerItem, store}: { BasicPage: Function, routerItem: SliderDataModel, store: Store }) => {
+	const {json: url} = routerItem;
+	const articleData = store.getArticleData[url];
 	useEffect(() => {
-		const {json: url} = routerItem;
-		if (!url) {
+		if (articleData) {
+			store.setLoading(false);
 			return;
 		}
-		const res = request({url});
+		if (!url) {
+			store.setLoading(false);
+			return;
+		}
+		store.setLoading(true);
+		const res = request({url, data: {isLoading: true, store,}});
 		res.then(v => {
-			console.log(v);
+			store.setLoading(false);
+			store.setArticleData(url, v);
 		});
-	}, []);
+	}, [url]);
+	//	如果有数据了
+	if (articleData) {
+		return (
+			<BasicPage articleData={articleData}/>
+		);
+	}
 	return (
-		<BasicPage routerItem={routerItem}/>
+		<BasicPage articleData={{description: '暂无数据'}}/>
 	)
-}
+});

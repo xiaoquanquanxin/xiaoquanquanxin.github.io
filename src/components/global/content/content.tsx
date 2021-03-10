@@ -20,7 +20,7 @@ export const Content = observer(({store}) => {
 							<Route key={routerItem.link}
 								   path={routerItem.link}
 							>
-								<RoutingGuard BasicPage={BasicPage} routerItem={routerItem}/>
+								<RoutingGuard BasicPage={BasicPage} routerItem={routerItem} store={store}/>
 							</Route>
 						)
 					})

@@ -1,0 +1,10 @@
+export interface ArticleDataModule {
+	title: string;
+	description: string;
+	data: Array<ArticleContentDataModule>
+}
+
+export interface ArticleContentDataModule {
+	title: string;
+	content: string;
+}
