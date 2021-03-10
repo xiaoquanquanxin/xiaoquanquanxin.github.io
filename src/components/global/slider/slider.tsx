@@ -38,7 +38,7 @@ function SliderUl({sliderListData}: { sliderListData: SliderListDataModel }) {
 		return null;
 	}
 	return (
-		<ul>
+		<ul className={style.sliderUi}>
 			{sliderListData.map(({link, name, primary, indexes, children}: SliderDataModel, index: number) => {
 				return (
 					<li key={index}>

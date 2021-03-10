@@ -1,7 +1,7 @@
 export interface ArticleDataModule {
 	title: string;
 	description: string;
-	data: Array<ArticleContentDataModule>
+	sectionList: Array<ArticleContentDataModule>
 }
 
 export interface ArticleContentDataModule {
