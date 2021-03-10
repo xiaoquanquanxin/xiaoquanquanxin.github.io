@@ -7,4 +7,5 @@ export interface ArticleDataModule {
 export interface ArticleContentDataModule {
 	title: string;
 	content: string;
+	code: string;
 }

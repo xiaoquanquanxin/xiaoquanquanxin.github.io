@@ -1,6 +1,7 @@
 import React from "react"
 import style from "@css/content.module.less"
 import {ArticleContentDataModule, ArticleDataModule} from "@models/article";
+import Highlight from 'react-highlight'
 
 //	页面数据
 export function BasicPage({articleData}: { articleData: ArticleDataModule }) {
@@ -23,12 +24,15 @@ export function BasicPage({articleData}: { articleData: ArticleDataModule }) {
 
 //	文章数据
 function SectionData({articleContentData}: { articleContentData: ArticleContentDataModule }) {
-	const {content, title} = articleContentData;
+	const {content, title, code} = articleContentData;
 	console.log(title);
 	return (
 		<div>
 			<h2>{title}</h2>
 			<div>{content}</div>
+			{
+				code && (<Highlight language="javascript">{code}</Highlight>)
+			}
 		</div>
 	)
 }
