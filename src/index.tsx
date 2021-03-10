@@ -1,18 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.less';
 import App from './App';
 import {Provider} from 'mobx-react';
 import {store} from "@store/index";
 import reportWebVitals from './reportWebVitals';
+import './index.less';
+import '@css/androidstudio.css';
+import '@css/androidstudio.font.css';
 
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <App/>
-        </Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
+	<React.StrictMode>
+		<Provider store={store}>
+			<App/>
+		</Provider>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function
