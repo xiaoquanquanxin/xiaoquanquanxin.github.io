@@ -40,9 +40,7 @@ export class Store {
 		return this.loading;
 	}
 
-	//	正在延迟中？
-	private isDelay: boolean = true;
-	//	定时器
+	//	Loading...的定时器
 	private loadingTimeout: number = 0;
 
 	@action
@@ -53,20 +51,17 @@ export class Store {
 	@action
 	setLoading = (loading: boolean) => {
 		//	如果不在延迟中，或者打开loading，那么无脑设置loading
-		if (!this.isDelay || loading) {
+		if (loading) {
 			this.loading = loading;
-			this.isDelay = true;
 			clearTimeout(this.loadingTimeout);
 			return;
 		}
 		this.setLoadingTimeout(window.setTimeout(() => {
-			this.isDelay = false;
 			if (!loading) {
 				this.loading = loading;
 				return;
 			}
-			this.setLoading(loading);
-		}, 200))
+		}, 200));
 	};
 
 	//	文章数据
