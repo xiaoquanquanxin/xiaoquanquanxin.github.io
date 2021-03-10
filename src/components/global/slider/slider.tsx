@@ -5,8 +5,8 @@ import style from "./slider.module.less";
 import {observer} from "mobx-react";
 import {computedItemIndexes, computedRouteItem} from "@utils/slider";
 import {SliderDataModel, SliderListDataModel} from "@models/slider";
-const url = '/api/category.json';
 
+const url = '/api/data/category.json';
 
 //  菜单组件
 export const Slider = observer(({store}) => {

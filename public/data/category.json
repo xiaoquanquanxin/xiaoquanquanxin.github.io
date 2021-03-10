@@ -6,7 +6,8 @@
             "primary": false,
             "link": "/introduction",
             "itemIndexes": false,
-            "children": null
+            "children": null,
+            "json": ""
         },
         {
             "name": "基础",
@@ -17,12 +18,14 @@
                 {
                     "itemIndexes": true,
                     "name": "ES6",
-                    "link": "/es6"
+                    "link": "/es6",
+                    "json": "es6.json"
                 },
                 {
                     "itemIndexes": true,
                     "name": "Typescript",
-                    "link": "/typescript"
+                    "link": "/typescript",
+                    "json": "typescript.json"
                 },
                 {
                     "itemIndexes": true,

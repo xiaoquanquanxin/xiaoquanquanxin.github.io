@@ -13,4 +13,4 @@ export const Loading = observer(({store}) => {
 			</div>
 		</div>
 	)
-})
+});

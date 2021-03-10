@@ -33,7 +33,7 @@ export class Store {
 	};
 
 	//  路由数据
-	private loading: boolean = true;
+	private loading: boolean = false;
 	@action
 	setLoading = (loading: boolean) => {
 		this.loading = loading;
