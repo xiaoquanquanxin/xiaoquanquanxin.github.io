@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {request} from "@api/request";
-import {Link, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import style from "./slider.module.less";
 import {observer} from "mobx-react";
 import {computedItemIndexes, computedRouteItem} from "@utils/slider";

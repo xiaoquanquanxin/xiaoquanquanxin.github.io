@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {observer} from "mobx-react";
 import style from "./content.module.less";
 import {SliderDataModel} from "@models/slider"

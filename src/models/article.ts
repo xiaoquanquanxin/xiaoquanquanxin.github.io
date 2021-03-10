@@ -8,4 +8,6 @@ export interface ArticleContentDataModule {
 	title: string;
 	content: string;
 	code: string;
+	language: string;
+	__html: string;
 }

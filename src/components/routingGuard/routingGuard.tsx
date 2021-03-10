@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {SliderDataModel} from "@models/slider";
 import {request} from "@api/request";
 import {Store} from "@store/index";
