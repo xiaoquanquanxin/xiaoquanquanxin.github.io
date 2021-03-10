@@ -5,6 +5,7 @@ import {SliderDataModel} from "@models/slider"
 import {Route, Switch, Redirect} from 'react-router';
 // import {HomePage} from "@pages/homePage/homePage"
 import {BasicPage} from "@pages/basicPage/basicPage"
+import {RoutingGuard} from "@components/routingGuard/routingGuard";
 
 //  菜单组件
 export const Content = observer(({store}) => {
@@ -19,7 +20,7 @@ export const Content = observer(({store}) => {
 							<Route key={routerItem.link}
 								   path={routerItem.link}
 							>
-								<BasicPage routerItem={routerItem}/>
+								<RoutingGuard BasicPage={BasicPage} routerItem={routerItem}/>
 							</Route>
 						)
 					})
