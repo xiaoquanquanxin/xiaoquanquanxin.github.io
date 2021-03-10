@@ -13,13 +13,14 @@ export function BasicPage({articleData}: { articleData: ArticleDataModule }) {
 			<p>{description}</p>
 			<ol className={style.indexList} data-msg='索引'>
 				{
-					indexList && indexList.length && indexList.map(((indexItemModule: IndexItemModule) => {
+					sectionList && sectionList.length && sectionList.map(((indexItemModule: IndexItemModule) => {
 						const {title} = indexItemModule;
 						return (
-							<li className={style.anchorBar} key={title} onClick={() => {
-								const $title = document.getElementById(title);
-								$title && $title.scrollIntoView();
-							}}>{title}</li>
+							<li className={style.anchorBar} key={title}>
+								<span onClick={() => {
+									const $title = document.getElementById(title);
+									$title && $title.scrollIntoView();
+								}}>{title}</span></li>
 						)
 					}))
 				}

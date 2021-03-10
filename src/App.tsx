@@ -7,7 +7,6 @@ import {
 	BrowserRouter as Router,
 	HashRouter,
 } from 'react-router-dom';
-import '@css/color.less';
 import {GithubFork} from "@components/global/gitubFork/gitubFork";
 import {Slider} from "@components/global/slider/slider";
 import {inject} from "mobx-react";
