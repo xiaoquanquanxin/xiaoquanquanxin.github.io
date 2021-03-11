@@ -61,7 +61,7 @@ const IndexList = ({sectionList}: { sectionList: ArticleDataModule['sectionList'
 				sectionList.map(((indexItemModule: IndexItemModule) => {
 					const {title} = indexItemModule;
 					return (
-						<li className={style.anchorBar} key={title}>
+						<li className={`${style.anchorBar} cursor`} key={title}>
 								<span onClick={() => {
 									const $title = document.getElementById(title);
 									$title && $title.scrollIntoView();

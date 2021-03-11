@@ -4,8 +4,9 @@ import App from './App';
 import {Provider} from 'mobx-react';
 import {store} from "@store/index";
 import reportWebVitals from './reportWebVitals';
-import './index.less';
+import '@css/index.less';
 import '@css/color.less';
+import '@css/basic.less';
 import '@css/androidstudio.css';
 import '@css/androidstudio.font.css';
 
