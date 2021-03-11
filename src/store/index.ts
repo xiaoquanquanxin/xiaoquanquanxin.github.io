@@ -80,6 +80,15 @@ export class Store {
 		};
 	};
 
+	//	定时器
+	private timer: number = 0;
+
+	//	滚动的位置
+	private scrollTop: number = 0;
+	@computed
+	getScrollTop = () => this.scrollTop;
+	@action
+	setScrollTop = (scrollTop) => this.scrollTop = scrollTop;
 }
 
 const store = new Store();

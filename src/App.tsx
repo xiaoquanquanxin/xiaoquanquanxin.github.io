@@ -1,10 +1,5 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect} from "react";
 import {
-	Route,
-	Redirect,
-	Switch,
-	Link,
-	BrowserRouter as Router,
 	HashRouter,
 } from 'react-router-dom';
 import {GithubFork} from "@components/global/gitubFork/gitubFork";
