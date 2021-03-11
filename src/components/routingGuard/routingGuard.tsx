@@ -32,6 +32,6 @@ export const RoutingGuard = observer((
 		);
 	}
 	return (
-		<BasicPage articleData={{description: '暂无数据'}}/>
+		<BasicPage articleData={{description: '暂无数据'}} store={store}/>
 	)
 });
