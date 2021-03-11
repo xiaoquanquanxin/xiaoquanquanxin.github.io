@@ -28,7 +28,7 @@ export const RoutingGuard = observer((
 	//	如果有数据了
 	if (articleData) {
 		return (
-			<BasicPage articleData={articleData}/>
+			<BasicPage articleData={articleData} store={store}/>
 		);
 	}
 	return (
