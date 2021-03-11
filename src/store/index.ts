@@ -85,8 +85,17 @@ export class Store {
 
 	//	滚动的位置
 	private scrollTop: number = 0;
+
 	@computed
-	getScrollTop = () => this.scrollTop;
+	get getScrollTop() {
+		return this.scrollTop;
+	}
+
+	@computed
+	get getScrollBottom() {
+		return this.scrollTop + window.innerHeight;
+	}
+
 	@action
 	setScrollTop = (scrollTop) => this.scrollTop = scrollTop;
 }
