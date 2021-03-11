@@ -3,6 +3,7 @@ import {SliderDataModel} from "@models/slider";
 import {request} from "@api/request";
 import {Store} from "@store/index";
 import {observer} from "mobx-react";
+import {BasicNoDataPage} from "@pages/basicPage/basicPage";
 
 //	路由守卫组件
 export const RoutingGuard = observer((
@@ -32,6 +33,6 @@ export const RoutingGuard = observer((
 		);
 	}
 	return (
-		<BasicPage articleData={{description: '暂无数据'}} store={store}/>
+		<BasicNoDataPage articleData={{description: '暂无数据'}}/>
 	)
 });
