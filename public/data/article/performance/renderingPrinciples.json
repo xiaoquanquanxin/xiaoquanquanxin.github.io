@@ -1,0 +1,14 @@
+{
+    "title": "渲染原理",
+    "description": "渲染原理",
+    "sectionList": [
+        {
+            "title": "DOM树的生成",
+            "__html": "<p>DOM是按流生成的，每接收到一段字节流，就分词，生成node，转为dom，这些是按流生成的。</p>\n<p>解析的过程：</p>\n<p>如果遇到开始标签，压入栈中，如果是结束标签，从栈中取出，表示解析完成。</p>\n<p>文本节点不需要压入栈中，直接加入DOM树。</p>\n<p>默认先创建一个Document的主DOM结构。</p>\n<h3 class=\"red\">渲染的阻塞</h3>\n<p>css不阻塞DOM解析，不阻塞dom渲染，但会阻塞阻塞JS执行。</p>\n<p>这个原因是，因为js可以操作css，所以js在执行前，必须保证css已经完全加载完了，并且为所有DOM生成CSSOM。</p>\n<p>js脚本解析会阻塞DOM解析，因为js可以修改dom，下载外联js也会阻塞dom解析。</p>\n<p>chrome的预解析线程会提前解析整个文档，提前下载资源。</p>\n<p>script标签的async，异步下载，和defer，延迟执行</p>\n<p>CSSOM的必要性：提供js操作能力。</p>"
+        },
+        {
+            "title": "DOM渲染流程",
+            "__html": "<ol>\n    <li>文档解析成DOM</li>\n    <li>加载css，计算出DOM的层叠样式表</li>\n    <li>布局，计算位置</li>\n    <li>分层，根据层级关系，创建渲染树</li>\n    <li>根据渲染树创建渲染指令集————paint。canvas就是这一层。</li>\n    <li>在这之前都是渲染主线程，在这之后都是合成线程。</li>\n    <li>将图层分成图块，进行光栅化。</li>\n    <li>硬件加速，图块转为位图。</li>\n    <li>浏览器进程读取位图。</li>\n</ol>\n<p>重排，重绘，合成，合成最快，直接调取GPU，transform里，除斜拉</p>"
+        }
+    ]
+}

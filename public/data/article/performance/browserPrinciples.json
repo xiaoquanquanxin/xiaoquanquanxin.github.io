@@ -1,0 +1,14 @@
+{
+    "title": "浏览器原理",
+    "description": "浏览器原理",
+    "sectionList": [
+        {
+            "title": "浏览器的执行流程",
+            "__html": "<h3>1.导航</h3>\n<p style=\"margin-left: 30.0px;\">1.将请求转发给网络进程</p>\n<p style=\"margin-left: 30.0px;\">2.网络进程发起请求并得到响应</p>\n<p style=\"margin-left: 30.0px;\">3.向浏览器进程发起信息，通知渲染进程</p>\n<p style=\"margin-left: 30.0px;\">4.渲染进程和网络进程建立管道，接收数据</p>\n<p style=\"margin-left: 30.0px;\">5.渲染进程向浏览器通知解析准备，浏览器卸载页面，把loading状态改为渲染状态，history里push信息</p>\n<h3>2.渲染</h3>\n<p style=\"margin-left: 30.0px;\">1.将html转为dom树结构</p>\n<p style=\"margin-left: 30.0px;\">2.计算层叠样式表，转化为标准属性值</p>\n<p style=\"margin-left: 30.0px;\">3.布局，计算dom的几何位置</p>\n<p style=\"margin-left: 30.0px;\">4.为特殊的节点（不是每个节点都有对应的图层，只有特殊的，position、transform这类才有）生成专用图层，生成图层树</p>\n<p style=\"margin-left: 30.0px;\">5.根据合成树建立绘制列表，并通知合成线程</p>\n<p style=\"margin-left: 30.0px;\">6.合成线程将图层分块，转为位图，位图是像素点</p>\n<p style=\"margin-left: 30.0px;\">7.合成线程通知浏览器进程将内容绘制进内存，再由内存展示</p>\n<h3>3.重绘、重排</h3>\n<ol>\n    <li>重绘性能高，操作是paint，对于当前的DOM的图层直接调GPU。</li>\n    <li>重排操作DOM或者对影响DOM占位的属性值的变化，从头到位执行渲染流程，所以慢。</li>\n</ol>\n<p style=\"margin-left: 30.0px;\"><br></p>"
+        },
+        {
+            "title": "javascript执行机制",
+            "__html": "<p style=\"margin-left: 30.0px;\">1.变量提升</p>\n<p style=\"margin-left: 30.0px;\">2.创建执行上下文，调用栈先进后出</p>\n<p style=\"margin-left: 30.0px;\">3.垃圾回收：</p>\n<p style=\"margin-left: 60.0px;\">标记那些可回收，那些不可回收。将可回收的对象的内存回收。做内存整理（可选）。经过两次垃圾回收依然还存活的对象，会被移动到⽼⽣区中。</p>\n<p style=\"margin-left: 60.0px;\">执行回收算法时，js脚本将会暂停（全停顿）。</p>\n<p style=\"margin-left: 30.0px;\">4.编译过程：</p>\n<p style=\"margin-left: 60.0px;\">词法解析、语法解析；抽象语法树；优化、⽣成字节码；解释器会逐行执行，对热点代码编译器进行转机器码。</p>\n<p style=\"margin-left: 60.0px;\">Babel 的⼯作原理：是先将 ES6 源码转换为 AST，然后再将 ES6 语法的 AST 转换为 ES5 语法的 AST，最后利⽤ ES5 的 AST ⽣成\n    JavaScript 源代码。</p>\n<p style=\"margin-left: 30.0px;\">5.任务队列：</p>\n<p style=\"margin-left: 60.0px;\">先进先出，有阻塞，有异步。</p>\n<p style=\"margin-left: 60.0px;\">宏任务：渲染、交互、脚本执行、网络请求、文本读取。</p>\n<p style=\"margin-left: 60.0px;\">微任务：微任务就是⼀个需要异步执⾏的函数，执⾏时机是在主函数执⾏结束之后、当前宏任务结束之前。</p>\n<p><br></p>"
+        }
+    ]
+}
