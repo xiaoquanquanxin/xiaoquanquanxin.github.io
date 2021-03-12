@@ -20,11 +20,13 @@ export const RoutingGuard = observer((
 			return;
 		}
 		store.setLoading(true);
-		const res = request({url, data: {isLoading: true, store,}});
+		const res = request({url,});
 		res.then(v => {
-			store.setLoading(false);
 			store.setArticleData(url, v);
-		});
+		})
+			.finally(() => {
+				store.setLoading(false);
+			})
 	}, [url]);
 	//	如果有数据了
 	if (articleData) {

@@ -75,6 +75,9 @@ const IndexList = ({sectionList}: { sectionList: ArticleDataModule['sectionList'
 
 //	章节列表
 const ArticleList = observer(({sectionList, store}: { sectionList: ArticleDataModule['sectionList'], store: Store }) => {
+	if (!sectionList || !sectionList.length) {
+		return null;
+	}
 	const {length} = sectionList;
 	//	dom
 	const [list, useList]: [any, Function] = useState([]);
@@ -95,9 +98,6 @@ const ArticleList = observer(({sectionList, store}: { sectionList: ArticleDataMo
 			return current;
 		});
 	}, [store.getScrollTop]);
-	if (!sectionList || !sectionList.length) {
-		return null;
-	}
 	return (
 		<ol className={style.articleList} data-msg='正文'>
 			{
@@ -160,3 +160,4 @@ const SectionData = observer(({articleContentData, store, listRef, isLoaded}
 		</li>
 	)
 });
+
