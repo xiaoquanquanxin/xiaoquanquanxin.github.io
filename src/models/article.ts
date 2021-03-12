@@ -6,6 +6,7 @@ export interface ArticleDataModule {
 }
 
 export interface ArticleContentDataModule {
+	isLoaded: boolean;
 	title: string;
 	content: string;
 	code: string;

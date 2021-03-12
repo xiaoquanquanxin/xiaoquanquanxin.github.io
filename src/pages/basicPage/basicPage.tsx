@@ -61,11 +61,11 @@ const IndexList = ({sectionList}: { sectionList: ArticleDataModule['sectionList'
 				sectionList.map(((indexItemModule: IndexItemModule) => {
 					const {title} = indexItemModule;
 					return (
-						<li className={`${style.anchorBar} cursor`} key={title}>
+						<li className={style.anchorBar} key={title}>
 								<span onClick={() => {
 									const $title = document.getElementById(title);
 									$title && $title.scrollIntoView();
-								}}>{title}</span></li>
+								}} className='cursor'>{title}</span></li>
 					)
 				}))
 			}
@@ -74,7 +74,27 @@ const IndexList = ({sectionList}: { sectionList: ArticleDataModule['sectionList'
 }
 
 //	章节列表
-const ArticleList = (({sectionList, store}: { sectionList: ArticleDataModule['sectionList'], store: Store }) => {
+const ArticleList = observer(({sectionList, store}: { sectionList: ArticleDataModule['sectionList'], store: Store }) => {
+	const {length} = sectionList;
+	//	dom
+	const [list, useList]: [any, Function] = useState([]);
+	//	更新状态
+	const [loadList, useLoadList]: [Array<boolean>, Function] = useState([]);
+	const listRef = (dom) => {
+		if (list.length >= length) {
+			return;
+		}
+		list.push(dom);
+	};
+	useEffect(() => {
+		const {getScrollBottom: scrollBottom} = store;
+		list.reduce((prev: HTMLElement, current: HTMLElement, index: number) => {
+			if (prev.offsetTop <= scrollBottom && current.offsetTop >= scrollBottom) {
+				loadList[index - 1] = true;
+			}
+			return current;
+		});
+	}, [store.getScrollTop]);
 	if (!sectionList || !sectionList.length) {
 		return null;
 	}
@@ -85,27 +105,38 @@ const ArticleList = (({sectionList, store}: { sectionList: ArticleDataModule['se
 					return (
 						<SectionData articleContentData={articleContentData}
 									 store={store}
+									 listRef={listRef}
+									 isLoaded={loadList[index]}
 									 key={articleContentData.title}/>
 					)
 				})
 			}
 		</ol>
 	)
-})
+});
 
 //	文章数据
-const SectionData = observer(({articleContentData, store}: { articleContentData: ArticleContentDataModule, store: Store }) => {
+const SectionData = observer(({articleContentData, store, listRef, isLoaded}
+								  : { articleContentData: ArticleContentDataModule, store: Store, listRef: any, isLoaded: boolean }) => {
 	const {content, title, code, language, __html} = articleContentData;
 	const [CodeComponent, setCodeComponent] = useState(code ? highLightPlaceholder : <></>);
-	const item: any = useRef(null);
+	const [clickLoaded, useClickLoaded] = useState(false);
+
 	useEffect(() => {
-		const {offsetTop} = item.current;
-		const {getScrollBottom: scrollBottom} = store;
-		if (scrollBottom > offsetTop) {
-			console.log(scrollBottom, offsetTop);
-			setCodeComponent(<Highlight language={language || "javascript"}>{code}</Highlight>);
+		if (!isLoaded || !code) {
+			return
 		}
-	}, [store.getScrollTop]);
+		// console.log(isLoaded, title);
+		// setCodeComponent(<Highlight language={language || "javascript"}>{code}</Highlight>);
+	}, [isLoaded]);
+
+	useEffect(() => {
+		if (!clickLoaded) {
+			return;
+		}
+		store.setLoading(false);
+		setCodeComponent(<Highlight language={language || "javascript"}>{code}</Highlight>);
+	}, [clickLoaded]);
 	return (
 		<li>
 			<h2>
@@ -114,7 +145,18 @@ const SectionData = observer(({articleContentData, store}: { articleContentData:
 			</h2>
 			<div>{content}</div>
 			<div dangerouslySetInnerHTML={{__html}}/>
-			<div ref={item} className='sectionItem'>{CodeComponent}</div>
+			<div
+				ref={listRef}
+				className={`sectionItem ${clickLoaded ? '' : 'cursor'}`}
+				title={`${clickLoaded ? '' : '点击加载代码'}`}
+				onClick={() => {
+					if (clickLoaded) {
+						return;
+					}
+					store.setLoading(true);
+					useClickLoaded(true);
+				}}
+			>{CodeComponent}</div>
 		</li>
 	)
 });

@@ -24,7 +24,7 @@ export const Content = observer(({store}: { store: Store }) => {
 				const {scrollTop} = e.target;
 				store.setScrollTop(scrollTop);
 				timer = null;
-			}, 500);
+			}, 100);
 		};
 		(current as any).addEventListener('scroll', fn, false);
 		return (() => {
