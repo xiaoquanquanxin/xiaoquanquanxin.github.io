@@ -1,10 +1,26 @@
 {
     "title": "nginx",
-    "description": "nginx",
+    "description": "前后端分离下，由于前端代码用一个额外的服务启动，其协议、域名、端口可能与API服务端口不同。并且根据浏览器History对象开发的前端路由，在刷新时需要额外try files，重定向到index.html，故配置ngxin是十分重要的。",
     "sectionList": [
         {
-            "title": "nginx",
-            "__html": ""
+            "title": "请求代理",
+            "__html": "解决跨域问题",
+            "code": "http {\n    ...\n    server {\n        ...\n        #nginx会拦截所有的以/api开头的请求，然后将其转发到新指定地址\n        #监听所有的/api开头的请求\n        location ^/api/ {\n            #重写所有请求\n            rewrite ^/api/(.*) /fixpath=$1 break;\n            #代理到指定地址\n            proxy_pass http://127.0.0.1:3000/\n        }\n    }\n}"
+        },
+        {
+            "title": "前端单页应用路由刷新404问题",
+            "__html": "核心原因是服务器里没有对应前端路由的",
+            "code": "http {\n    ...\n    server {\n        ...\n        #重定向\n        location / {\n            try_files $uri /index.html;\n            root /xxx;\n        }\n    }\n}"
+        },
+        {
+            "title": "配置gzip",
+            "__html": "<p>GZIP是规定的三种标准HTTP压缩格式之一。目前绝大多数的网站都在使用GZIP传输 HTML、CSS、JavaScript 等资源文件。</p>\n<p>对于文本文件，GZip 的效果非常明显，开启后传输所需流量大约会降至 1/4 ~ 1/3。</p>",
+            "code": "http {\n    ...\n    server {\n        ...\n        gzip    on;\n            #启用 GZip 所需的HTTP 最低版本;默认值为HTTP/1.1\n            gzip_http_version       1.1;\n            #压缩级别，级别越高压缩率越大，压缩时间也就越长（传输快但比较消耗cpu）；默认值为 1；压缩级别取值为1-9\n            gzip_comp_level         5;\n            #设置允许压缩的页面最小字节数，Content-Length小于该值的请求将不会被压缩；默认值:0；当设置的值较小时，压缩后的长度可能比原文件大，建议设置1000以上\n            gzip_min_length         1000;\n            #要采用gzip压缩的文件类型(MIME类型)；默认值:text/html(默认不压缩js/css)\n            gzip_types text/csv text/xml text/css text/plain text/javascript application/javascript application/x-javascript application/json application/xml;\n    }\n}"
+        },
+        {
+            "title": "负载均衡",
+            "__html":"<p>负载均衡就是用来帮助我们将众多的客户端请求合理的分配到各个服务器，以达到服务端资源的充分利用和更少的请求时间。</p>\n<h4>轮询策略</h4>\n<p>默认情况下采用的策略，将所有客户端请求轮询分配给服务端。这种策略是可以正常工作的，但是如果其中某一台服务器压力太大，出现延迟，会影响所有分配在这台服务器下的用户。</p>\n<h4>最小连接数策略</h4>\n<p>将请求优先分配给压力较小的服务器，它可以平衡每个队列的长度，并避免向压力大的服务器添加更多的请求。</p>\n<h4>最快响应时间策略</h4>\n<p>依赖于NGINX Plus，优先分配给响应时间最短的服务器。</p>\n<h4>客户端ip绑定</h4>\n<p>来自同一个ip的请求永远只分配一台服务器，有效解决了动态网页存在的session共享问题。</p>\n<h4>静态资源服务器</h4>\n<p>匹配以png|gif|jpg|jpeg为结尾的请求，并将请求转发到本地路径，root中指定的路径即nginx本地路径。同时也可以进行一些缓存的设置。</p>"
         }
     ]
 }
+

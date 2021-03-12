@@ -94,7 +94,8 @@
                 {
                     "itemIndexes": true,
                     "name": "nginx代理",
-                    "link": "/nginxProxy"
+                    "link": "/nginx",
+                    "json": "/build/data/article/engineering/nginx.json"
                 }
             ]
         },
