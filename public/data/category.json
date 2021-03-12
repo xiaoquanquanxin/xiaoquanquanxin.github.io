@@ -30,7 +30,8 @@
                 {
                     "itemIndexes": true,
                     "name": "nodeJs",
-                    "link": "/nodeJs"
+                    "link": "/nodeJs",
+                    "json": "/build/data/article/basic/nodeJs.json"
                 }
             ]
         },

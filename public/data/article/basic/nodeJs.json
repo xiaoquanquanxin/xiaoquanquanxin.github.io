@@ -1,0 +1,51 @@
+{
+    "title": "NodeJs",
+    "description": "NodeJs",
+    "sectionList": [
+        {
+            "title": "什么是NodeJs",
+            "__html": "<p>本质是一个js解释器，js是脚本语言，运行需要解释器，nodejs就是一个解释器。</p>\n<p>它是js运行的环境，可以脱离浏览器。</p>\n<p>它运行在服务器，并不是web服务器，而是一个服务器程序。</p>\n<p>核心是v8引擎。</p>"
+        },
+        {
+            "title": "为什么要使用nodejs",
+            "__html": "<p>为了提供高性能的web服务，而不是取代其他后端语言</p>\n<p> IO性能强大</p>\n<p>事件处理机制完善</p>"
+        },
+        {
+            "title": "node的优势",
+            "__html": "<p>处理大流量的数据</p>\n<p>适合实时交互应用，直播那种</p>\n<p>完美支持对象数据库，mongodb</p>\n<p>异步处理大量并发连接，一台服务器上有很多客户端连接，就是并发连接</p>"
+        },
+        {
+            "title": "hello world",
+            "code": "const http = require('http');\nconsole.log('node不能有中文路径！');\nhttp.createServer(function (req, res){\n    //  返回头     状态码     返回头部信息，json格式\n    res.writeHead(200, {'Content-Type': 'text/plain'});\n    //  发送响应的数据\n    res.end('hello world!\\n');\n}).listen(8888);\nconsole.log('服务运行了');"
+        },
+        {
+            "title": "nodejs回调函数",
+            "__html": "<p>1.回调</p>\n<p>2.阻塞与非阻塞</p>\n<p>3.nodejs回调函数</p>\n<p>同步调用：直接调用</p>\n<p>回调：双向调用，被调用的函数也会调用主调函数</p>\n<p>异步调用：相当于消息、事件</p>\n<p>阻塞和非阻塞，关注的是程序在等待调用结果时的状态</p>",
+            "code": "//  读取文件\nlet fs = require('fs');\n(() => {\n    console.log('阻塞式读取');\n    //  阻塞式读取\n    let data = fs.readFileSync('c.html');\n    //  输出一个16进制的文本内容\n    console.log(data);\n    //  输出正确的数据\n    console.log(data.toString());\n})();\n\n(() => {\n\t//  非阻塞读取\n    console.log('非阻塞读取');\n    fs.readFile('c.html', (err, response) => {\n        if (err) {\n            return console.log('读取失败');\n        }\n        console.log(response);\n        console.log(response.toString());\n    });\n})();"
+        },
+        {
+            "title": "事件驱动机制",
+            "__html": "<h4>1.事件驱动模型</h4>\n<p>nodejs没有多线程、多进程，也就没有额外的工作，所以性能高，可以通过回调实现并发</p>\n<p>事件依据的是观察者模式来实现</p>\n<p>事件模型：</p>\n<p>有一个事件队列，每产生一个事件，就把这个事件push到事件队列中去</p>\n<p>事件循环处理程序逐一从队列中取出事件，调用事件处理函数，再循环</p>\n<p>事件循环处理程序每隔一小段事件检查事件队列</p>\n<p>由eventEmitters触发事件</p>\n<p>nick name：事件驱动IO/非阻塞式IO</p>\n<h4>2.事件与事件绑定，流程</h4>\n<p>引入events对象，创建eventEmitter对象</p>\n<p> 绑定事件处理程序</p>\n<p>触发事件</p>\n<p>注意：要先绑定再触发，如果先触发，后绑定，先触发的事件无效果</p>",
+            "code": "//  引入Event模块并创建eventEmitter对象\nlet events = require('events');\nlet eventEmitter = new events.EventEmitter();\n//  绑定事件处理函数\nlet connectHanlder = function connected() {\n\tconsole.log('事件处理函数');\n};\n//  事件名称，回调函数\neventEmitter.on('connection', connectHanlder);\n\n//  触发事件\neventEmitter.emit('connection');\n//  输出提示\nconsole.log('程序执行完毕');\n//  再次触发\neventEmitter.emit('connection');"
+        },
+        {
+            "title": "NodeJs模块化",
+            "__html": "<h4>1.模块化的概念，意义：</h4>\n<p>一些大项目，不同的部分分门别类放在不同的文件中，为了让文件可以相互调用，提出了模块系统</p>\n<p>一个NodeJs文件是一个模块，这个文件可能是js，也可能是json</p>\n<h4>2.NodeJs中的模块</h4>\n<p>四类模块：原生模块和3种文件模块，原生模块是NodeJs天然提供的，其他三种是三方的</p>\n<h4>3.加载流程</h4>\n<p>一般使用require方法进行加载</p>\n<p>载入之后，在文件模块缓存区中检查文件是否被载入过，防止模块被反复加载</p>\n<p>如果是，返回exports,通过export关键字调用</p>\n<p>如果否，检查模块是否是原生模块</p>\n<p>如果是，跳转到原生模块的处理流程，在原生模块缓存区中查找，如果是，exports</p>\n<p>如果否，加载模块，缓存模块</p>\n<p>如果否，从第三方模块区去找，先去找文件模块，根据文件的拓展名载入模块，缓存</p>\n<p>原生模块缓存区和文件模块缓存区，是两个不同的区域，缓存区的意义是，防止某一个模块被反复加载</p>\n<p>任何模块的载入，都需要先从文件模块缓存区判断是否已经被缓存</p>\n<h4>4.module path的生成规则为：</h4>\n<p>从当前文件目录开始查找node_modules目录</p>\n<p>然后依次进入父目录，查找父目录下的node_modules目录</p>\n<p>依次迭代，直到根目录下的node_modules目录。</p>\n<p>require加载</p>\n<p>原生模块：http，fs</p>\n<p>相对路径：./mod</p>\n<p>绝对路径：/mod</p>\n<p>非原生模块：mod</p>"
+        },
+        {
+            "title": "路由",
+            "content": "把一条路分成多个方向，像十字路口；路由器就是把一根网线分成让多个人上网的地址",
+            "code": "const url = require('url');\nconst util = require('util');\n//\t基础路由\nfunction route(pathname, request, response){\n    console.log(\"About to route a request for \" + pathname);\n    if (pathname === '/') {\n        response.writeHead(200, {\"Content-Type\": \"text/plain\"});\n        response.write(\"Hello World\");\n    } else {\n        response.write(util.inspect(url.parse(request.url, true)))\n    }\n    response.end();\n}\n\nexports.route = route;"
+        },
+        {
+            "title": "全局方法和工具",
+            "__html": "<h4>全局对象：</h4>\n<p>Global Object</p>\n<h4>全局变量：</h4>\n<p>在最外层定义的变量；</p>\n<p>全局对象的属性；</p>\n<p>隐式定义的变量；</p>\n<h4>process</h4>\n<p>process 是一个全局变量，即 global 对象的属性。</p>\n<h4>常用工具：</h4>\n<p>util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心JavaScript 的功能 过于精简的不足。</p>\n<p>util.inherits(constructor, superConstructor) 是一个实现对象间原型继承的函数。</p>\n<p>这个垃圾，不如ess6</p>\n<p>util.inspect(object,[showHidden],[depth],[colors]) 是一个将任意对象转换 为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。</p>\n<p>这个不全，可以使用underscore</p>",
+            "code": "console.log(`全局对象${global}`);\nconsole.log(`具体文件${__filename}`);\nconsole.log(`具体目录${__dirname}`);\nconst timer = setTimeout(function (){\n    console.log(timer);\n}, 100);\nclearTimeout(timer);\n//  示例\nprocess.on('exit', function (code){\n    // 以下代码永远不会执行\n    setTimeout(function (){\n        console.log(\"该代码不会执行\");\n    }, 0);\n    console.log('退出码为:', code);\n});\nconsole.log(\"程序执行结束\");\n//  常用工具函数\n(function (){\n    //  inherits\n    const util = require('util');\n    function Base(){\n        this.name = 'base';\n        this.base = 1991;\n        this.sayHello = function (){\n            console.log('Hello ' + this.name);\n        };\n    }\n    Base.prototype.showName = function (){\n        console.log(this.name);\n    };\n    function Sub(){\n        this.name = 'sub';\n    }\n    util.inherits(Sub, Base);\n    console.log('****************************');\n    var objSub = new Sub();\n    objSub.showName();\n    objSub.showName();\n    console.log('****************************');\n}());\n\n(function (){\n    var util = require('util');\n    function Person(){\n        this.name = 'byvoid';\n        this.toString = function (){\n            return this.name;\n        };\n    }\n\n    var obj = new Person();\n    console.log(util.inspect(obj));\n    console.log(util.inspect(obj, true));\n}());"
+        },
+        {
+            "title": "文件系统",
+            "__html": "<p>Node.js 文件系统（fs 模块）模块中的方法均有异步和同步版本，例如读取文件内容的函数有异步的 fs.readFile() 和同步的 fs.readFileSync()。</p><h4>缺点：</h4><p>同步：慢，卡，阻塞</p><p>异步：回调地狱，解决：promise</p><p>断点续传：下载了一半，断网了，继续</p>",
+            "code": "const fs = require('fs');\nconst filePath = 'readFile.txt';\n//  同步读取和异步读取\n(function (){\n    // 异步读取\n    fs.readFile(filePath, function (err, data){\n        if (err) {\n            return console.error(err);\n        }\n        console.log('异步*****************************异步');\n        console.log(data.toString());\n    });\n    // 同步读取\n    const data = fs.readFileSync(filePath);\n    console.log('同步*****************************同步');\n    console.log(data.toString());\n    console.log(\"程序执行完毕。\");\n}());\n\n//  读写\n(function (){\n    console.log(\"准备打开文件！\");\n    const buf = new Buffer.alloc(32);\n    fs.open(filePath, 'r+', function (err, fd){\n        if (err) {\n            return console.error(err);\n        }\n        console.log(\"文件打开成功！\");\n        fs.read(fd, buf, 0, buf.length, 0, function (err, bytes){\n            if (err) {\n                console.log(err);\n            }\n            console.log(bytes + \"  字节被读取\");\n            // 仅输出读取的字节\n            if (bytes > 0) {\n                console.log(buf.slice(0, bytes).toString());\n            }\n            fs.close(fd, function (){\n            })\n        });\n    });\n}());"
+        }
+    ]
+}
