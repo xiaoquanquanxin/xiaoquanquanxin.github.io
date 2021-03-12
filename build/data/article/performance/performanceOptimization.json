@@ -1,0 +1,19 @@
+{
+    "title": "性能优化基础",
+    "description": "性能优化基础",
+    "sectionList": [
+        {
+            "title": "总结优化",
+            "__html": "<p>网络部分，减少请求个数，减少资源大小，能内联的内联，能公用的公用</p>\n<p>css部分，原子化css，选择器优化</p>\n<p>html部分，首屏优化</p>\n<p>js部分，延迟加载async，defer。</p>\n<p>读取dom和操作dom不要在同一个任务里。js操作dom引起的重排问题。</p>\n<p>js不要大量使用递归，会触发垃圾回收机制，造成全停顿。</p>\n<p>首选css动画，而不是js动画</p>\n<p>首屏优化</p>"
+        },
+        {
+            "title": "首屏优化",
+            "__html": "<p>只渲染首屏或1.5屏</p>\n<p>不必要的js延迟加载</p>\n<p>减少请求次数，尽量内联css和js</p>\n<p>不能内联的，减小体积</p>"
+        },
+        {
+            "title": "利用分层技术优化代码",
+            "__html": "<p>如果用js操作DOM，会牵扯整个主线程，因为渲染主线程里包含渲染。</p>\n<p>使用transform:translate(0)来使div具有独立的层。</p>\n<p>使用will-change，渲染引擎为它单独开一个层， <a href=\"https://developer.mozilla.org/zh-CN/docs/Web/CSS/will-change\">https://developer.mozilla.org/zh-CN/docs/Web/CSS/will-change</a>\n</p>\n<p>canvas是在渲染主线程最后一步paint，css可以直接调gpu，但也可能是改变width引起的重排。</p>"
+        }
+    ]
+}
+

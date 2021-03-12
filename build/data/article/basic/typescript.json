@@ -1,0 +1,34 @@
+{
+    "title": "Typescript",
+    "description": "typescript是一门语言，用于数据类型的校验；以前也有js版本的类似功能的flow等，但已经落后版本。\n既然是语言，最好的总结就是代码。",
+    "sectionList": [
+        {
+            "title": "基础类型",
+            "code": "//  布尔值\nlet isBoolean: boolean = false;\n//  数字\nlet isNumber: number = 1;\n//  字符串\nlet isString: string = 'str';\nlet isString1: string = `xx`;\nlet isString2: string = `${isString}`;\n//  数组\nlet isNumberArray: number[] = [1, 2, 3];\n//  Array<元素类型>是数组泛型\nlet isNumberList: Array<number> = [1, 2, 3];\nlet isStringArray: string[] = ['1', '2', '3'];\n//  Array<元素类型>是数组泛型\nlet isStringList: Array<string> = ['1', '2', '3'];\n\n//  元组 Tuple--- 已知  元素数量和类型的数组,数组成员的类型和数量是固定的\nlet isTupleArray: [string, number] = ['4', 3];\nisTupleArray.push('world');\nisTupleArray.splice(0, 1);\n\n//  枚举\nenum Color {\n\tRed, Green, Blue\n}\n\nlet e1: Color = Color.Blue;\n\n//  可以手动的指定成员的数值\nenum Color2 {\n\tRed = 5,\n\tRed1,\n\tGreen = 3,\n\tRedd,\n\tRedd2,\n\tRedd3,\n\tReddd = 6\n}\n\n//  自然增加索引，相同的索引，会被后面的成员覆盖\nconsole.log(Color2[5]);\n\n//  any\nlet isAnyList: any[] = [1, true, \"free\"];\n\n//  Object类型的变量只是允许你给它赋任意值,但是却不能够在它上面调用任意的方法,即便它真的有这些方法\nlet prettySure: Object = 4;\n\n//  void,没有类型,null,undefined,用处不大\n//  当你指定了--strictNullChecks标记，null和undefined只能赋值给void和它们各自\nlet isVoid: void = void 0;\nisVoid = void 0;\nisVoid = undefined;\nlet isUndefined: undefined = undefined;\nlet isNull: null = null;\n\n//  never,类型表示的是那些永不存在的值的类型\n//  never类型是那些总是会抛出异常,或根本就不会有返回值的函数表达式,或箭头函数表达式的返回值类型\nfunction error(message: string): never | number {\n\tthrow new Error(message);\n\treturn 1;\n}\n\n//  抛出异常后，没有打印\nconsole.log(error(''));\n\n//  类型断言\n//  通过类型断言这种方式可以告诉编译器，“相信我，我知道自己在干什么”\n//  它没有运行时的影响，只是在编译阶段起作用\nlet someValue: any = \"this is a string\";\nlet strLength1: number = (<string>someValue).length;\nlet strLength2: number = (someValue as string).length;\nlet strLength3: number = someValue.length;"
+        },
+        {
+            "title": "变量声明",
+            "code": "//  解构\n//  忽略你不关心的元素：\nlet [, second, , fourth] = [1, 2, 3, 4];\n\n//  注意，我们需要用括号将它括起来\n//  因为Javascript通常会将以 { 起始的语句解析为一个块\nlet {a} = {a: '1'};\nlet b;\n({b} = {b: 2});\n\n//属性重命名\n//  令人困惑的是，这里的冒号不是指示类型的。\n//  如果你想指定它的类型， 仍然需要在其后写上完整的模式。\nlet {d: e}: { d: string } = {d: '我是e'};\nconsole.log(e);\n\n//  默认值\nlet {f = 12}: { f: number } = {f: 1};\n\n//  TypeScript编译器不允许展开泛型函数上的类型参数"
+        },
+        {
+            "title": "重载，转为js为switch",
+            "code": "function fn(a: string): string;\nfunction fn(a: number): number;\nfunction fn(a) {\n    switch (typeof a) {\n        case \"string\":\n            return a;\n        case \"number\":\n            return a;\n        default:\n            throw new Error('错误的a');\n    }\n}"
+        },
+        {
+            "title": "class",
+            "code": "class Person {\n\tname: string;\n\tage: number;\n\n\tprotected _protected: boolean;\n\tprivate _private: boolean;\n\n\tconstructor(name: string, age: number) {\n\t\tthis.name = name;\n\t\tthis.age = age;\n\t}\n}\n\nclass Student extends Person {\n\t_class: string;\n\n\tconstructor(name: string, age: number, _class: string) {\n\t\tsuper(name, age);\n\t\tconsole.log(this);\n\t\tthis._class = _class;\n\t}\n\n\tsay_protected() {\n\t\tconsole.log();\n\t\treturn this._protected;\n\t}\n\n\tsay_private() {\n\t\t// return this._private;\n\t}\n}\n\nconst s = new Student('权鑫', 13, '小学');\nconsole.log(s.say_protected());\n// console.log(s.say_private());\n// console.log(Student._protected)\n//  public      谁都可以访问\n//  private     私有的，只有父类可以访问，要修改属性，通过父类的类的方法去修改\n//  对于private的实现，是defineProperty，设置空的属性\n//  protected   受保护的，只有父类和子类可以访问，要修改属性，通过父类的类的方法去修改\n\nclass Hello {\n\n}"
+        },
+        {
+            "title": "封装",
+            "code": "(() => {\n\tclass Hello {\n\t\tprivate _name: string;\n\n\t\t//\n\t\tget name(): string {\n\t\t\treturn this._name;\n\t\t}\n\n\t\tset name(name: string) {\n\t\t\tthis._name = name;\n\t\t}\n\t}\n\n\tconst h = new Hello();\n\th.name = '权鑫';\n\tconsole.log(h);\n\tconsole.log(h.name);\n\t// console.log(h._name);\n})();"
+        },
+        {
+            "title": "static",
+            "code": "(() => {\n\tclass P {\n\t\tname: string;\n\t\tstatic sName: string;\n\n\t\tconstructor(name = '权鑫') {\n\t\t\tthis.name = name;\n\t\t}\n\n\t\tsayName(): string {\n\t\t\treturn this.name;\n\t\t}\n\t}\n\n\tclass S extends P {\n\t\tstatic sName: string;\n\n\t\tconstructor() {\n\t\t\tsuper('21');\n\n\t\t}\n\t}\n\n\tconst p = new P();\n\tconsole.log(p.name);\n\tconsole.log(P.sName);\n\tconst s = new S();\n\tconsole.log(s);\n\tconsole.log(S.sName);\n})();"
+        },
+        {
+            "title": "接口",
+            "code": "//  ts核心之一，类型检查\n(() => {\n\tinterface Label {\n\t\tlabel: string;\n\t\tname?: string;\n\t}\n\n\tfunction a(label: Label) {\n\t\tconsole.log(label);\n\t}\n\n\ta({label: '权鑫', name: 'q'});\n\ta({label: '权鑫'});\n})();\n\n//  函数\n(() => {\n\tinterface intFn {\n\t\t(a: string, b: boolean): boolean;\n\t}\n\n\tlet fn: intFn = function (a: string, b: boolean) {\n\t\treturn b;\n\t}\n\tconsole.log(fn('', true));\n})();\n\n//  数组\n(() => {\n\tinterface StringArray {\n\t\t[index: number]: string | number\n\t}\n\n\tconst arr: StringArray = ['', 0];\n\tconsole.log(arr,);\n})();\n\n//  接口实现class类型\n(() => {\n\tinterface ClockInterface {\n\t\tcurrentTime: Date,\n\n\t}\n\n\tclass clock implements ClockInterface {\n\t\tpublic currentTime;\n\n\t\tconstructor(currentTime) {\n\t\t\tthis.currentTime = currentTime;\n\t\t}\n\t}\n\n\tconst c = new clock(new Date(21));\n\tconsole.log(c);\n})();\n\n//  接口的继承、混合\n(() => {\n\tinterface Shape {\n\t\tcolor: string;\n\t}\n\n\tinterface Stroke {\n\t\twidth: number;\n\t}\n\n\tinterface Block extends Shape, Stroke {\n\t\tsideLength: number,\n\t\t_fn: void;\n\n\t\tfn(): void;\n\t}\n\n\tconst s = <Block>{\n\t\tcolor: 'red',\n\t\twidth: 2,\n\t\t_fn: undefined,\n\t\tfn() {\n\t\t}\n\t};\n\tconsole.log(s);\n})();\n\n//  泛型，在定义的时候，不需要明确指定类型。在调用的时候，才指定类型\n(() => {\n\tfunction Hello<T>(arg: T): T {\n\t\treturn arg;\n\t}\n\n\tconst output = Hello<string>('str');\n\tconsole.log(output);\n\n})();"
+        }
+    ]
+}
