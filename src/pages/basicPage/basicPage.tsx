@@ -121,7 +121,6 @@ const SectionData = observer(({articleContentData, store, listRef, isLoaded}
 	const {content, title, code, language, __html} = articleContentData;
 	const [CodeComponent, setCodeComponent] = useState(code ? highLightPlaceholder : <></>);
 	const [clickLoaded, useClickLoaded] = useState(false);
-
 	useEffect(() => {
 		if (!isLoaded || !code) {
 			return
@@ -129,9 +128,8 @@ const SectionData = observer(({articleContentData, store, listRef, isLoaded}
 		// console.log(isLoaded, title);
 		// setCodeComponent(<Highlight language={language || "javascript"}>{code}</Highlight>);
 	}, [isLoaded]);
-
 	useEffect(() => {
-		if (!clickLoaded) {
+		if (!clickLoaded || !code) {
 			return;
 		}
 		store.setLoading(false);
