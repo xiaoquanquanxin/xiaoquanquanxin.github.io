@@ -7,7 +7,7 @@
             "link": "/introduction",
             "itemIndexes": false,
             "children": null,
-            "json": ""
+            "json": "/build/data/article/introduction.json"
         },
         {
             "name": "基础",
@@ -19,18 +19,19 @@
                     "itemIndexes": true,
                     "name": "ES6",
                     "link": "/es6",
-                    "json": "/build/data/article/es6.json"
+                    "json": "/build/data/article/basic/es6.json"
                 },
                 {
                     "itemIndexes": true,
                     "name": "Typescript",
                     "link": "/typescript",
-                    "json": "/build/data/article/typescript.json"
+                    "json": "/build/data/article/basic/typescript.json"
                 },
                 {
                     "itemIndexes": true,
                     "name": "nodeJs",
-                    "link": "/nodeJs"
+                    "link": "/nodeJs",
+                    "json": "/build/data/article/basic/nodeJs.json"
                 }
             ]
         },
@@ -94,7 +95,8 @@
                 {
                     "itemIndexes": true,
                     "name": "nginx代理",
-                    "link": "/nginxProxy"
+                    "link": "/nginx",
+                    "json": "/build/data/article/engineering/nginx.json"
                 }
             ]
         },
@@ -107,17 +109,26 @@
                 {
                     "itemIndexes": true,
                     "name": "性能优化基础",
-                    "link": "/performanceOptimization"
+                    "link": "/performanceOptimization",
+                    "json": "/build/data/article/performance/performanceOptimization.json"
                 },
                 {
                     "itemIndexes": true,
                     "name": "浏览器原理",
-                    "link": "/browserPrinciples"
+                    "link": "/browserPrinciples",
+                    "json": "/build/data/article/performance/browserPrinciples.json"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "渲染原理",
+                    "link": "/renderingPrinciples",
+                    "json": "/build/data/article/performance/renderingPrinciples.json"
                 },
                 {
                     "itemIndexes": true,
                     "name": "http基础",
-                    "link": "/HTTPBased"
+                    "link": "/HTTPBased",
+                    "json": "/build/data/article/performance/httpBasic.json"
                 }
             ]
         }
