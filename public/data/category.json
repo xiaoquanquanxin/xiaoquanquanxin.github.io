@@ -67,7 +67,8 @@
                 {
                     "itemIndexes": true,
                     "name": "vue源码分析",
-                    "link": "/vueSourceCodeAnalysis"
+                    "link": "/vueSourceCodeAnalysis",
+                    "json": "/build/data/article/webFrame/vueSourceCodeAnalysis.json"
                 },
                 {
                     "itemIndexes": true,

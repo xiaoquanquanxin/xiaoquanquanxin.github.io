@@ -1,0 +1,18 @@
+{
+    "title": "vue源码分析",
+    "description": "vue源码主要分为编译时和运行时两部分",
+    "sectionList": [
+        {
+            "title": "概述",
+            "__html": "<ol><li>vue-cli将template编译成一个render函数，函数里是字符串，将来可能是eval执行。</li><li>在运行时执行这个render函数，这个函数执行完出来是一个 virtual dom。</li><li>vue运行后创建并维护一个实例，实例包含生命周期、模板、数据、监听等等。</li></ol>"
+        },
+        {
+            "title": "在线编译和离线编译",
+            "__html": "<ol><li>编译分离线编译和在线编译，vue-loader，webpack这种是离线编译。直接写在html里的vue模板是在线编译。</li><li>在线编译的过程，和离线编译是2个分支的代码。在线编译在运行时获取一堆东西，离线编译创建render函数以后直接挂载render函数体。</li></ol>"
+        },
+        {
+            "title": "vue和react不同",
+            "__html": "<ol><li>vue是编译时就优化了，所以开发者必须按模板去写。react的jsx的render函数是一个函数，所以各种灵活。</li></ol>"
+        }
+    ]
+}
