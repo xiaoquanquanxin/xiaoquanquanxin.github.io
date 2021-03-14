@@ -1,0 +1,14 @@
+{
+    "title": "vue和react对比",
+    "description": "vue和react对比",
+    "sectionList": [
+        {
+            "title": "对于开发",
+            "__html": "<ol><li>生态：非常优秀。</li><li>对于开发，react灵活不方便，vue方便不灵活。</li><li>对于react的class写法，和vue较为类似，并且有shouldComponentUpdate钩子函数用于阻止渲染提交。</li><li>对于react hooks写法，有很多注意点，可能造成很多渲染报错或者性能问题，需要大量的优化。</li><li>react的render函数是一个函数，所以任何时候都非常方便。</li><li>vue的template模板采用xml语法，对于开发较简单需求的项目非常方便。</li></ol>"
+        },
+        {
+            "title": "对于源码",
+            "__html": "<ol><li>react更新时，会从root节点一直找。而vue会通过proxy一下找到更新的节点，所以vue找节点更快。</li><li>vue编译时就可以优化，而react的render是函数，没法优化，所以他们的优化方向不一样，react更多是运行时优化。</li></ol>"
+        }
+    ]
+}

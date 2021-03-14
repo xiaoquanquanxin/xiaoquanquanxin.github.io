@@ -77,7 +77,14 @@
                 {
                     "itemIndexes": true,
                     "name": "React源码分析",
-                    "link": "/reactSourceCodeAnalysis"
+                    "link": "/reactSourceCodeAnalysis",
+                    "json": "/build/data/article/webFrame/reactSourceCodeAnalysis.json"
+                },
+                {
+                    "itemIndexes": true,
+                    "name": "vue和react对比",
+                    "link": "/compareFrame",
+                    "json": "/build/data/article/webFrame/compareFrame.json"
                 }
             ]
         },

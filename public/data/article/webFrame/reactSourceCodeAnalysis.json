@@ -1,0 +1,34 @@
+{
+    "title": "React源码分析",
+    "description": "react运行时主要分为三大阶段，调度器schedule，调节器reconciler，提交任务render",
+    "sectionList": [
+        {
+            "title": "v16对v15的更新,v17的更新",
+            "__html": "<ol><li>v15一个长任务，会阻塞用户交互；v16Fiber架构，执行异步的任务调度，保证不失去响应。</li><li>v16给所有任务制定优先级，先做优先级高的任务，优先级高的任务能阻断优先级低的任务。</li><li>v16react每次更新都只能为所有fiber节点设置一个优先级。所以高优先级的cpu任务会打断低优先级的io任务。</li><li>v17指定一个优先级的区间。</li></ol>"
+        },
+        {
+            "title": "优先级",
+            "__html": "<ol><li>生命周期方法：同步执行。</li><li>受控的用户输入，input：同步执行。</li><li>交互事件，动画：高优先级。</li><li>其他，数据请求等：低优先级。</li><li>优先级和时间绑定，优先级会随着时间的流逝而升高。</li><li>代码可以设置优先级。unstable_runWithPriority。</li><li>优先级是全局共用的。</li></ol>"
+        },
+        {
+            "title": "fiber调度逻辑",
+            "__html": "<ol><li>分同步、异步任务。同步任务立即执行；异步任务进入scheduler。</li><li>计算得到过期时间，过期时间=当前时间+优先级时间。</li><li>对比过期时间和当前时间，区分立即执行和延迟执行任务。</li><li>立即执行任务执行完后，会再次判断是否有延迟任务到了过期时间。</li><li>v17.每一批任务执行在不同的宏任务中，所以不会阻塞交互。</li><li>v17对比的是lane，车道，而不是时间。</li></ol>"
+        },
+        {
+            "title": "scheduler的优化",
+            "__html": "<ol><li>用截流的方式做批处理优化。</li><li>区分同步异步：v16：判断过期时间；v17：判断通道。</li><li>分过期时间：用一个switch给不同优先级的任务设置过期时间</li><li>执行任务：判断任务是及时任务还是延迟任务，及时任务推到及时任务队列并且立刻执行，延迟任务推到延迟任务队列并且延迟响应的时间执行。延迟执行要从延迟任务列表里取出任务，对比过期时间。</li><li>最终发起更新的逻辑：MessageChannel中。</li></ol>"
+        },
+        {
+            "title": "协调器reconciler",
+            "__html": "<p>用于找出变化的组件，v16以后，为了方便打断，都是链表格式。</p><p>dom-diff找出不同后，打上标记，等待下一个commit阶段再渲染。不直接渲染也是为了方便打断。</p><h4>构建fiber</h4><p>在第二次执行fiber的时候，会将前一次创建的fiber-tree保存到当前fiber节点的一个属性上，这样可以快速对比节点的不同，而不需要二次遍历fiber-tree。</p><p>构建fiber-tree，中序遍历。2步，一来一回，先深度遍历，到头了广度遍历，如果兄弟节点有自节点继续深度遍历，如果没有兄弟节点就返回。</p><p>构建fiber-tree的时候，就已经创建了dom，但是不渲染，先存在fiber中。</p><h4>beginWork</h4><p>在遍历节点的过程中：</p><p>根据不同的节点创建不同的fiber节点</p><p>标记不同的节点</p><p>beginWork要区分、调用函数组件还是类组件，对于类组件：</p><p>beginWork执行了constructor到render的生命周期钩子。一些Did的钩子是打上标记，等dom更新完毕才执行。</p><p>对于函数组件：调用函数体，判断是否有更新，打标记，判断context，生成fiber。</p><h4>completeWork</h4><p>从自节点遍历到父节点，是构建fiber-tree的第二次遍历。</p><p>从子到父的遍历是为了把子节点的副作用添加到父节点的副作用链中。最终会得到一个完整的副作用链。</p><h4>dom-diff算法</h4><ol><li>如果对不同层级的fiber进行比较，那么复杂度会非常高，所以只对同级进行比较。fiber里有对当前节点的缓存，所以很快找到并进行比较。</li><li>节点变化，直接删除，重新构建。</li><li>存在key值，进行相同key的节点的比较。</li></ol><h5>单节点diff</h5><ol><li>判断存在对应节点，key值是否相同，节点类型一致，可以复用。</li><li>同上，类型不同，标记删除。</li><li>对应节点不同，标记删除。</li><li>不存在对应节点，创建节点。</li><li>key是针对同一层级的。</li></ol><h4>多节点diff</h4><ol><li>多节点diff多用于列表，节点交换顺序，节点新增、删除。</li><li>对比相同index的节点的key是否相同，相同返回该对象；key不相同跳出。</li><li>判断节点是否移动，返回新的位置。</li><li>新数组比老数组短，多余的节点标记删除。</li><li>新数组存在新节点，创建新节点。</li><li>有可能打乱顺序非常乱，所以创建一个map，保存所有没有匹配的旧的节点，然后新的数组的key去以依次匹配，如果有就复用，没有就新创建。</li></ol>"
+        },
+        {
+            "title": "commit阶段",
+            "__html": "<ol><li>dom渲染，分为前、中、后3个阶段。</li><li>commitBeforeMutationEffect：先判断是否标记删除，是否有自节点【遍历自节点】，执行getSnapshotBeforeUpdate钩子，最后返回兄弟节点。所以getSnapshotBeforeUpdate是一个洋葱模型，先执行自组件的这个钩子，再执行父组件的这个钩子。useEffect也在这里注册，但是是在一个延迟之后真正的执行。</li><li>commitMutationEffect：类似commitBeforeMutationEffect，页面渲染出来了。render是洋葱结构。需要卸载的要调用componentWillUnmount钩子。</li><li>recursivelyCommitLayoutEffects：最后的递归，遍历EffectList，调用生命周期didMount、didUpdate，执行Effect；赋值ref；处理回调；更新fiber-tree。</li></ol>"
+        },
+        {
+            "title": "useState",
+            "__html": "<ol><li>初始化，获得初始化的值；创建一个队列，用于存放每一次的更新；绑定队列和组件，保证唯一性；返回值和修改这个值的dispatch。</li><li>触发修改dispatch，发起一个update，使react进行更新，更新组件后，再执行到这个useState，才会更新这个值。</li><li>所以useState是异步的，且是第二次更新组件的时候才改变的值。</li></ol>"
+        }
+    ]
+}
