@@ -1,6 +1,6 @@
 {
     "title": "vue源码分析",
-    "description": "vue源码主要分为编译时和运行时两部分",
+    "description": "vue框架主要分为render函数、数据、数据的观察者、维护render函数和观察者之间的纽带watcher、订阅和分发的Dep。",
     "sectionList": [
         {
             "title": "概述",
@@ -8,11 +8,23 @@
         },
         {
             "title": "在线编译和离线编译",
-            "__html": "<ol><li>编译分离线编译和在线编译，vue-loader，webpack这种是离线编译。直接写在html里的vue模板是在线编译。</li><li>在线编译的过程，和离线编译是2个分支的代码。在线编译在运行时获取一堆东西，离线编译创建render函数以后直接挂载render函数体。</li></ol>"
+            "__html": "<ol><li>编译分离线编译和在线编译，vue-loader，webpack这种是离线编译。直接写在html里的vue模板是在线编译。</li><li>在线编译的过程，和离线编译是2个分支的代码。在线编译在运行时获取一堆东西，离线编译创建render函数以后直接挂载render函数体。</li><li>区分不同的包是为了减小包的体积。</li></ol>"
+        },
+        {
+            "title": "watcher",
+            "__html": "<ol><li>vue1.x时，一个指令对应一个watcher，n个指令对应n个watcher，所以会卡；也因此没有dom-diff。</li><li>vue2.x时，一个组件对应一个watcher，在组件层面做dom-diff。因此一次操作修改一个组件，计算量稍大一点。这也是和react的fiber节点dom-diff的区别。react由于没有watcher，所以没法做编译时的优化，只能做运行时优化。</li></ol>\n<h4>编译时优化</h4>"
+        },
+        {
+            "title": "编译阶段",
+            "__html": "<ol><li>大流程：parseHtml生成ast，描述转义后的语法的数据结构。这是一个正则匹配的过程。</li><li>parseHtml，匹配流程注释、条件注释、Doctype、闭合标签、单标签、开始标签；匹配常规标签上的v-指令；最终生成一个ast，描述节点的属性和节点间的对应关系。</li><li>用ast不断遍历、递归，生成字符串，此字符串就是最终生成的模板。</li><li>静态节点优化：本身没有v-指令，子节点也是静态节点；不断递归。给静态节点打标签isStatic，dom-diff直接pass。</li><li>once优化：用一个缓存保留执行后的结果，如果再次执render，直接取缓存。</li><li>编译阶段的缺点：用正则匹配模板，对于正则本身来说，由于正则的回溯大模板的效率低。</li></ol>"
         },
         {
             "title": "vue和react不同",
             "__html": "<ol><li>vue是编译时就优化了，所以开发者必须按模板去写。react的jsx的render函数是一个函数，所以各种灵活。</li></ol>"
+        },
+        {
+            "title": "",
+            "__html": ""
         }
     ]
 }
